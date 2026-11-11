@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudySphere | Personal Study Planner</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🎓</div>
+
+            <div>
+                <h2>StudySphere</h2>
+                <p>Your Personal Study Planner</p>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <button class="nav-item active" data-page="dashboard">
+                <span>⌂</span>
+                Dashboard
+            </button>
+
+            <button class="nav-item" data-page="subjects">
+                <span>▤</span>
+                Subjects
+            </button>
+
+            <button class="nav-item" data-page="tasks">
+                <span>☑</span>
+                My Tasks
+            </button>
+
+            <button class="nav-item" data-page="schedule">
+                <span>▦</span>
+                Schedule
+            </button>
+
+            <button class="nav-item" data-page="progress">
+                <span>▥</span>
+                Progress
+            </button>
+
+            <button class="nav-item" data-page="settings">
+                <span>⚙</span>
+                Settings
+            </button>
+
+        </nav>
+
+        <div class="sidebar-quote">
+            <span>✦</span>
+            <p>Small progress is still progress.</p>
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div class="search">
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="globalSearch"
+                    placeholder="Search tasks or subjects..."
+                >
+
+                <kbd>Ctrl + K</kbd>
+            </div>
+
+            <div class="top-actions">
+
+                <button class="notification-button">♢</button>
+
+                <div class="profile-mini">
+                    <div class="avatar" id="topAvatar">R</div>
+
+                    <div>
+                        <strong id="topName">Student</strong>
+                        <small>StudySphere</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==================================================
+                         DASHBOARD
+        ================================================== -->
+
+        <section class="page active-page" id="dashboardPage">
+
+            <div class="hero">
+
+                <div class="hero-content">
+                    <span class="eyebrow">YOUR ACADEMIC COMMAND CENTER</span>
+
+                    <h1>
+                        Good <span id="greetingTime">Evening</span>,
+                        <span id="dashboardName">Student</span>! 👋
+                    </h1>
+
+                    <p>
+                        Let's make today productive and move closer to your goals.
+                    </p>
+
+                    <button class="primary-btn" id="heroTaskButton">
+                        + Create New Task
+                    </button>
+                </div>
+
+                <div class="hero-quote">
+                    <span class="quote-symbol">“</span>
+                    <p>Discipline today,<br>freedom tomorrow.</p>
+                    <span class="quote-symbol right">”</span>
+                </div>
+
+            </div>
+
+
+            <!-- DASHBOARD STATISTICS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">📚</div>
+                    <div>
+                        <h2 id="subjectCount">0</h2>
+                        <p>Subjects</p>
+                    </div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-icon">✓</div>
+                    <div>
+                        <h2 id="completedCount">0</h2>
+                        <p>Completed</p>
+                    </div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-icon">⌛</div>
+                    <div>
+                        <h2 id="pendingCount">0</h2>
+                        <p>Pending</p>
+                    </div>
+                </div>
+
+                <div class="stat-card red">
+                    <div class="stat-icon">🔥</div>
+                    <div>
+                        <h2 id="streakCount">0</h2>
+                        <p>Day Streak</p>
+                    </div>
+                </div>
+
+                <div class="stat-card blue">
+                    <div class="progress-ring small-ring"
+                         id="dashboardProgressRing">
+                        <span id="dashboardProgress">0%</span>
+                    </div>
+
+                    <div>
+                        <h3>Overall</h3>
+                        <p>Progress</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <!-- TODAY TASKS -->
+
+                <div class="glass-card focus-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <span class="section-label">TODAY</span>
+                            <h2>🎯 Today's Focus</h2>
+                        </div>
+
+                        <button class="primary-btn small-btn"
+                                id="dashboardAddTask">
+                            + New Task
+                        </button>
+                    </div>
+
+                    <div id="dashboardTasks" class="task-list"></div>
+
+                </div>
+
+
+                <!-- WEEKLY ACTIVITY -->
+
+                <div class="glass-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <span class="section-label">ACTIVITY</span>
+                            <h2>Weekly Progress</h2>
+                        </div>
+                    </div>
+
+                    <div class="weekly-chart" id="weeklyChart"></div>
+
+                </div>
+
+
+                <!-- DEADLINES -->
+
+                <div class="glass-card deadlines-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <span class="section-label">DON'T MISS</span>
+                            <h2>📅 Upcoming Deadlines</h2>
+                        </div>
+
+                        <button class="text-button"
+                                data-go="tasks">
+                            View All →
+                        </button>
+                    </div>
+
+                    <div id="deadlineList"></div>
+
+                </div>
+
+
+                <!-- STREAK -->
+
+                <div class="glass-card streak-panel">
+
+                    <span class="section-label">CONSISTENCY</span>
+
+                    <h2>🔥 Study Streak</h2>
+
+                    <div class="big-streak">
+                        <span id="largeStreak">0</span>
+                        <small>DAYS</small>
+                    </div>
+
+                    <div class="week-dots" id="weekDots"></div>
+
+                    <p>
+                        Complete at least one task each day to keep your streak alive.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+                         SUBJECTS
+        ================================================== -->
+
+        <section class="page" id="subjectsPage">
+
+            <div class="page-title-row">
+
+                <div>
+                    <span class="eyebrow">YOUR LEARNING SPACE</span>
+                    <h1>My Subjects 📚</h1>
+                    <p>Add and manage everything you're studying.</p>
+                </div>
+
+                <button class="primary-btn" id="addSubjectButton">
+                    + Add Subject
+                </button>
+
+            </div>
+
+            <div class="subject-grid" id="subjectGrid"></div>
+
+        </section>
+
+
+        <!-- ==================================================
+                         TASKS
+        ================================================== -->
+
+        <section class="page" id="tasksPage">
+
+            <div class="page-title-row">
+
+                <div>
+                    <span class="eyebrow">GET THINGS DONE</span>
+                    <h1>My Tasks ✅</h1>
+                    <p>Plan assignments, revisions and study goals.</p>
+                </div>
+
+                <button class="primary-btn" id="taskPageAddButton">
+                    + New Task
+                </button>
+
+            </div>
+
+
+            <div class="task-toolbar">
+
+                <div class="filter-tabs">
+                    <button class="filter active-filter"
+                            data-filter="all">
+                        All
+                    </button>
+
+                    <button class="filter"
+                            data-filter="today">
+                        Today
+                    </button>
+
+                    <button class="filter"
+                            data-filter="pending">
+                        Pending
+                    </button>
+
+                    <button class="filter"
+                            data-filter="completed">
+                        Completed
+                    </button>
+                </div>
+
+                <input
+                    type="text"
+                    class="task-search"
+                    id="taskSearch"
+                    placeholder="Search tasks..."
+                >
+
+            </div>
+
+            <div class="glass-card task-page-card">
+                <div id="allTasksList" class="task-list"></div>
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+                         SCHEDULE
+        ================================================== -->
+
+        <section class="page" id="schedulePage">
+
+            <div class="page-title-row">
+
+                <div>
+                    <span class="eyebrow">PLAN YOUR WEEK</span>
+                    <h1>Study Schedule 🗓️</h1>
+                    <p>Create your own weekly study routine.</p>
+                </div>
+
+                <button class="primary-btn" id="addSessionButton">
+                    + Add Session
+                </button>
+
+            </div>
+
+            <div class="schedule-board glass-card">
+
+                <div class="schedule-header">
+                    <div>Time</div>
+                    <div>Monday</div>
+                    <div>Tuesday</div>
+                    <div>Wednesday</div>
+                    <div>Thursday</div>
+                    <div>Friday</div>
+                    <div>Saturday</div>
+                    <div>Sunday</div>
+                </div>
+
+                <div id="scheduleGrid"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+                         PROGRESS
+        ================================================== -->
+
+        <section class="page" id="progressPage">
+
+            <div class="page-title-row">
+
+                <div>
+                    <span class="eyebrow">YOUR GROWTH</span>
+                    <h1>Progress 📈</h1>
+                    <p>See how much you've accomplished.</p>
+                </div>
+
+            </div>
+
+
+            <div class="progress-layout">
+
+                <div class="glass-card overall-card">
+
+                    <span class="section-label">OVERALL COMPLETION</span>
+
+                    <div class="progress-ring large-ring"
+                         id="largeProgressRing">
+
+                        <div>
+                            <strong id="largeProgress">0%</strong>
+                            <span>Overall</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="glass-card progress-summary">
+
+                    <div>
+                        <span>Total Tasks</span>
+                        <strong id="progressTotal">0</strong>
+                    </div>
+
+                    <div>
+                        <span>Completed</span>
+                        <strong id="progressCompleted">0</strong>
+                    </div>
+
+                    <div>
+                        <span>Pending</span>
+                        <strong id="progressPending">0</strong>
+                    </div>
+
+                    <div>
+                        <span>Subjects</span>
+                        <strong id="progressSubjects">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="glass-card subject-progress-card">
+
+                <div class="card-heading">
+                    <div>
+                        <span class="section-label">BY SUBJECT</span>
+                        <h2>Subject-wise Progress</h2>
+                    </div>
+                </div>
+
+                <div id="subjectProgressList"></div>
+
+            </div>
+
+
+            <div class="glass-card progress-chart-card">
+
+                <div class="card-heading">
+                    <div>
+                        <span class="section-label">LAST 7 DAYS</span>
+                        <h2>Completed Tasks</h2>
+                    </div>
+                </div>
+
+                <div class="large-weekly-chart"
+                     id="largeWeeklyChart"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+                         SETTINGS
+        ================================================== -->
+
+        <section class="page" id="settingsPage">
+
+            <div class="page-title-row">
+
+                <div>
+                    <span class="eyebrow">MAKE IT YOURS</span>
+                    <h1>Settings ⚙️</h1>
+                    <p>Personalise your StudySphere experience.</p>
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+                <div class="glass-card setting-card">
+
+                    <h2>👤 Profile</h2>
+
+                    <label>Your Name</label>
+
+                    <input
+                        type="text"
+                        id="nameSetting"
+                        placeholder="Enter your name"
+                    >
+
+                    <button class="primary-btn"
+                            id="saveNameButton">
+                        Save Profile
+                    </button>
+
+                </div>
+
+
+                <div class="glass-card setting-card">
+
+                    <h2>🎯 Daily Goal</h2>
+
+                    <label>Tasks per day</label>
+
+                    <select id="dailyGoal">
+
+                        <option value="1">1 task</option>
+                        <option value="2">2 tasks</option>
+                        <option value="3">3 tasks</option>
+                        <option value="4">4 tasks</option>
+                        <option value="5">5 tasks</option>
+
+                    </select>
+
+                    <button class="primary-btn"
+                            id="saveGoalButton">
+                        Save Goal
+                    </button>
+
+                </div>
+
+
+                <div class="glass-card setting-card">
+
+                    <h2>🌙 Appearance</h2>
+
+                    <p class="setting-description">
+                        Switch between dark and light mode.
+                    </p>
+
+                    <button class="secondary-btn"
+                            id="themeButton">
+                        Switch Theme
+                    </button>
+
+                </div>
+
+
+                <div class="glass-card setting-card danger-card">
+
+                    <h2>⚠ Reset StudySphere</h2>
+
+                    <p class="setting-description">
+                        Delete all subjects, tasks and schedule sessions.
+                    </p>
+
+                    <button class="danger-button"
+                            id="resetButton">
+                        Reset All Data
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ==================================================
+                     SUBJECT MODAL
+================================================== -->
+
+<div class="modal-overlay" id="subjectModal">
+
+    <div class="modal">
+
+        <button class="modal-close" data-close="subjectModal">×</button>
+
+        <span class="eyebrow">NEW SUBJECT</span>
+
+        <h2>Add Subject 📚</h2>
+
+        <label>Subject Name</label>
+
+        <input
+            id="subjectNameInput"
+            type="text"
+            placeholder="e.g. Engineering Mathematics"
+        >
+
+        <label>Short Name</label>
+
+        <input
+            id="subjectShortInput"
+            type="text"
+            maxlength="12"
+            placeholder="e.g. MATH"
+        >
+
+        <label>Choose Icon</label>
+
+        <div class="icon-picker" id="iconPicker">
+
+            <button class="icon-choice selected-icon">📐</button>
+            <button class="icon-choice">💻</button>
+            <button class="icon-choice">⚛️</button>
+            <button class="icon-choice">🧪</button>
+            <button class="icon-choice">📚</button>
+            <button class="icon-choice">⚙️</button>
+            <button class="icon-choice">🧠</button>
+            <button class="icon-choice">🌍</button>
+
+        </div>
+
+        <button class="primary-btn full-btn"
+                id="saveSubjectButton">
+            Add Subject
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+                       TASK MODAL
+================================================== -->
+
+<div class="modal-overlay" id="taskModal">
+
+    <div class="modal">
+
+        <button class="modal-close" data-close="taskModal">×</button>
+
+        <span class="eyebrow">NEW STUDY TASK</span>
+
+        <h2>Create Task ✨</h2>
+
+        <label>Task Name</label>
+
+        <input
+            id="taskNameInput"
+            type="text"
+            placeholder="e.g. Complete Vector Calculus Tutorial"
+        >
+
+        <label>Subject</label>
+
+        <select id="taskSubjectInput"></select>
+
+        <label>Deadline</label>
+
+        <input
+            id="taskDateInput"
+            type="date"
+        >
+
+        <label>Priority</label>
+
+        <div class="priority-picker">
+
+            <button class="priority-choice high"
+                    data-priority="High">
+                🔴 High
+            </button>
+
+            <button class="priority-choice medium selected-priority"
+                    data-priority="Medium">
+                🟡 Medium
+            </button>
+
+            <button class="priority-choice low"
+                    data-priority="Low">
+                🟢 Low
+            </button>
+
+        </div>
+
+        <label>Notes <small>(optional)</small></label>
+
+        <textarea
+            id="taskNotesInput"
+            placeholder="Add notes about this task..."
+        ></textarea>
+
+        <button class="primary-btn full-btn"
+                id="saveTaskButton">
+            Create Task
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+                     SESSION MODAL
+================================================== -->
+
+<div class="modal-overlay" id="sessionModal">
+
+    <div class="modal">
+
+        <button class="modal-close" data-close="sessionModal">×</button>
+
+        <span class="eyebrow">WEEKLY PLANNER</span>
+
+        <h2>Add Study Session 🗓️</h2>
+
+        <label>Subject / Activity</label>
+
+        <input
+            id="sessionTitle"
+            type="text"
+            placeholder="e.g. Mathematics Revision"
+        >
+
+        <label>Day</label>
+
+        <select id="sessionDay">
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+            <option>Friday</option>
+            <option>Saturday</option>
+            <option>Sunday</option>
+        </select>
+
+        <label>Time</label>
+
+        <input
+            id="sessionTime"
+            type="time"
+        >
+
+        <button class="primary-btn full-btn"
+                id="saveSessionButton">
+            Add to Schedule
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
